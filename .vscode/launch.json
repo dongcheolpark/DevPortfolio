@@ -1,0 +1,66 @@
+{
+	// IntelliSense를 사용하여 가능한 특성에 대해 알아보세요.
+	// 기존 특성에 대한 설명을 보려면 가리킵니다.
+	// 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
+	"version": "0.2.0",
+	"configurations": [
+/// <backend>
+		{
+			"name": "npm backend test",
+			"request": "launch",
+			"runtimeArgs": [
+				"test",
+			],
+			"runtimeExecutable": "npm",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"type": "node",
+			"cwd": "${workspaceRoot}/backend"
+		},
+		{
+			"name": "npm backend start",
+			"request": "launch",
+			"runtimeArgs": [
+				"start",
+			],
+			"runtimeExecutable": "npm",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"type": "node",
+			"cwd": "${workspaceRoot}/backend"
+		},
+/// </backend>
+/// <frontend>
+		{
+			"name": "npm frontend serve",
+			"request": "launch",
+			"runtimeArgs": [
+				"run",
+				"serve",
+			],
+			"runtimeExecutable": "npm",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"type": "node",
+			"cwd": "${workspaceRoot}/frontend/devportfolio"
+		},
+		{
+			"name": "npm frontend build",
+			"request": "launch",
+			"runtimeArgs": [
+				"run",
+				"serve",
+			],
+			"runtimeExecutable": "npm",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"type": "node",
+			"cwd": "${workspaceRoot}/frontend/devportfolio"
+		},
+/// </frontend>
+	]
+}

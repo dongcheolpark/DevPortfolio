@@ -1,0 +1,36 @@
+{
+  "dependencies": {
+    "typescript": "^4.7.4"
+  },
+  "name": "devportfolio",
+  "description": "포트폴리오 사이트",
+  "version": "0.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16",
+    "ts-node": "^10.8.1",
+    "tsc-watch": "^5.0.3"
+  },
+  "scripts": {
+    "test": "tsc-watch --onSuccess \" node dist/app.js\" ",
+    "start": "node dist/app.js",
+    "prestart": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dongcheolpark/DevPortfolio.git"
+  },
+  "keywords": [
+    "node",
+    "typescript",
+    "vue3"
+  ],
+  "author": "dongcheolpark",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dongcheolpark/DevPortfolio/issues"
+  },
+  "homepage": "https://github.com/dongcheolpark/DevPortfolio#readme"
+}
