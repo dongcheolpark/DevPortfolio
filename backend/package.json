@@ -15,8 +15,7 @@
   },
   "scripts": {
     "test": "tsc-watch --onSuccess \" node dist/app.js\" ",
-    "start": "node dist/app.js",
-    "prestart": "tsc"
+    "start": "node dist/app.js"
   },
   "repository": {
     "type": "git",
