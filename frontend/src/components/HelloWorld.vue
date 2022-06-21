@@ -32,6 +32,13 @@ export default {
     return {
       state
     }
+  },
+  data() {
+    return {
+        sliders: {
+          slider1: 0
+        }
+    };
   }
 }
 </script>
