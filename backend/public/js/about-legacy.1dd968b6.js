@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkdevportfolio"]=self["webpackChunkdevportfolio"]||[]).push([[443],{811:function(n,e,r){r.r(e),r.d(e,{default:function(){return l}});var t=r(6252),u={class:"about"},o=(0,t._)("h1",null,"This is an about page",-1),a=[o];function i(n,e){return(0,t.wg)(),(0,t.iD)("div",u,a)}var s=r(3744);const c={},f=(0,s.Z)(c,[["render",i]]);var l=f}}]);
-//# sourceMappingURL=about-legacy.1dd968b6.js.map
