@@ -43,7 +43,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
       with:
-        context: .
-        file: ./backend/Dockerfile
+        context: ./backend
+        file: ./Dockerfile
         push: true
         tags: ghcr.io/dongcheolpark/devportfolio:latest
