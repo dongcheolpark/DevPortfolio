@@ -43,6 +43,7 @@ jobs:
         password: ${{ secrets.TOKEN }}
     # Buildx 로 Docker 이미지를 빌드하고 푸시하는 GitHub 작업이다.
     - name: Build and push Docker image
+      run: ls
       uses: docker/build-push-action@v3
       with:
         context: ./backend
