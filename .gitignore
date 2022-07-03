@@ -104,5 +104,3 @@ dist
 .tern-port
 
 backend/public
-
-backend/src/lib/DbConfig.ts
