@@ -29,6 +29,7 @@ jobs:
         cd frontend
         npm ci
         npm run build
+        cd ..
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v2
