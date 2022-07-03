@@ -9,6 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name : get docker image file
         run : docker pull ghcr.io/dongcheolpark/devportfolio:latest
       - name : deploy to heroku
