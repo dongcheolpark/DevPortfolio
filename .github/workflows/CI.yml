@@ -45,4 +45,4 @@ jobs:
         context: .
         file: ./backend/Dockerfile
         push: true
-        tags: ghcr.io/dongcheolpark/DevPortFolio:latest
+        tags: ghcr.io/dongcheolpark/devportfolio:latest
