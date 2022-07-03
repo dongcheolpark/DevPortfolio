@@ -43,6 +43,6 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         context: .
-        file: ../backend/Dockerfile
+        file: ./backend
         push: true
         tags: ghcr.io/dongcheolpark/devportfolio:latest
