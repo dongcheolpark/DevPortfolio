@@ -5,18 +5,22 @@ on:
     workflows: ["CI"]
     types:
       - completed
+    branches: ["master"]
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name : get docker image file
-        run : docker pull ghcr.io/dongcheolpark/devportfolio:latest
+      - name : Build Frontend Files
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+          cd ..
       - name : deploy to heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'dongcheolparkportfolio'
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          appdir : "./backend"
           usedocker: true
