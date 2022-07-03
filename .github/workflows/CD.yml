@@ -18,4 +18,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'dongcheolparkportfolio'
           heroku_email: ${{secrets.HEROKU_EMAIL}}
+          appdir : "./backend"
           usedocker: true
