@@ -16,7 +16,9 @@ app.use('/about',home);
 
 app.use(express.static('public'));
 
-app.listen(3000, () => {
-  console.log('listen t0 3000')
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log('listen ' + port)
 })
  
