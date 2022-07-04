@@ -17,6 +17,13 @@ jobs:
           npm ci
           npm run build
           cd ..
+      - name : Copy .Env file
+        run : |
+          cd backend
+          touch .env
+          echo {{ secrets.ENV_FILE }} >> .env
+          cat .env
+          cd ..
       - name : deploy to heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
