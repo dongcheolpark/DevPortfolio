@@ -104,3 +104,5 @@ dist
 .tern-port
 
 backend/public
+
+.DS_Store

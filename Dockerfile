@@ -14,4 +14,5 @@ RUN npm install --only=production
 COPY ./backend ./
 
 EXPOSE 3000 
-CMD [ "npm", "start" ]
+
+CMD ["./run.sh"]
