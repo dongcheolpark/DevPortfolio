@@ -20,10 +20,19 @@ jobs:
       - name : Copy .Env file
         run : |
           cd backend
-          touch .env
-          echo {{ secrets.ENV_FILE }} >> .env
-          cat .env
+          echo "dbhost = $DB_HOST" >> .env
+          echo "dbuser = $DB_USER" >> .env
+          echo "dbpassword = $DB_PASSWORD" >> .env
+          echo "dbport = $DB_PORT" >> .env
+          echo "dbdatabase = $DB_DATABASE" >> .env
           cd ..
+        env :
+          DB_HOST : ${{ secrets.DB_HOST }}
+          DB_USER : ${{ secrets.DB_USER }}
+          DB_PASSWORD : ${{ secrets.DB_PASSWORD }}
+          DB_PORT : ${{ secrets.DB_PORT }}
+          DB_DATABASE : ${{ secrets.DB_DATABASE }}
+
       - name : deploy to heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
