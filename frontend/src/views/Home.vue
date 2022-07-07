@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Intro></Intro>
-    <v-container>
+    <v-container fluid>
         <v-row>
           <v-col
             v-for="n in 24"
@@ -26,5 +26,11 @@ import Intro from '@/components/Home/Intro.vue'
     Intro
   }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  data() {
+    return {
+      fill : true,
+    }
+  }
+}
 </script>

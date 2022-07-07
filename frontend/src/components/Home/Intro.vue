@@ -1,8 +1,16 @@
 <template>
-	<h1>helloIntro</h1>
+  <v-container class="full-screen IntroContainer ma-0 pa-3" fluid justify-center>
+    <v-layout class="pa-2">
+      <h1>helloIntro</h1>
+    </v-layout>
+  </v-container>
 </template>
 <style lang="sass" scoped>
-
+.full-screen
+  width:100%
+  height: 100vh
+.IntroContainer 
+  background : orange 
 </style>
 <script lang='ts'>
 import { defineComponent } from 'vue'
