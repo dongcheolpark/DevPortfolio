@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main class="pt-2 pt-sm-2 pt-xs-2 pt-md-0 pt-lg-0 pt-xl-0">
+    <v-main class="ma-0 pa-0">
       <nav-bar/>
       <router-view/>
     </v-main>
