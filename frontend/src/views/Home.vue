@@ -1,17 +1,7 @@
 <template>
   <div class="home">
-    <Intro></Intro>
-    <v-container fluid>
-        <v-row>
-          <v-col
-            v-for="n in 24"
-            :key="n"
-            cols="4"
-          >
-            <v-card height="200"></v-card>
-          </v-col>
-        </v-row>
-      </v-container>
+    <Intro/>
+    <About/>
   </div>
 </template>
 
@@ -19,11 +9,13 @@
 import { Options, Vue } from 'vue-class-component'
 import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
 import Intro from '@/components/Home/Intro.vue'
+import About from '@/components/Home/about.vue'
 
 @Options({
   components: {
     HelloWorld,
-    Intro
+    Intro,
+    About
   }
 })
 export default class Home extends Vue {

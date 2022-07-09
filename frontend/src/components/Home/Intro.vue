@@ -1,5 +1,5 @@
 <template>
-  <v-container class="full-screen IntroContainer pa-16" fluid>
+  <v-container class="full-screen IntroContainer" fluid>
     <div class = "IntroThumbnail">
       <h1 class="IntroText">🛠 박동철 🛠<br/> 포트 폴리오 사이트 입니다.</h1>
     </div>
@@ -11,13 +11,18 @@
   width:100%
   height: 100vh
 .IntroContainer 
-  background : orange 
+  display: flex
+  justify-content: center
+  align-items: center
+  background-size: cover
+  background-position: center
+  background-image : url('~@/assets/Intro/IntroBackground.jpg')
 .IntroThumbnail
-  padding-top : 240px 
 .IntroText
   text-align : center
   font-family: 'Nanum Gothic', sans-serif
-  font-size: 2.5vmax
+  color: white
+  font-size: 3vmax
 </style>
 <script lang='ts'>
 import { defineComponent } from 'vue'
