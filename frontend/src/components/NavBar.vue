@@ -1,34 +1,29 @@
 <template>
-  <v-card>
-      <v-navigation-drawer
-        expand-on-hover
-        rail
-      >
-        <v-list>
-          <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-            title="Sandra Adams"
-            subtitle="sandra_a88@gmailcom"
-          ></v-list-item>
-        </v-list>
+  <v-app-bar 
+    collapse
+    absolute
+  >
+    <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-        <v-divider></v-divider>
+    <v-toolbar-title>My files</v-toolbar-title>
 
-        <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-folder" title="My Files" value="myfiles"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-multiple" title="Shared with me" value="shared"></v-list-item>
-          <v-list-item prepend-icon="mdi-star" title="Starred" value="starred"></v-list-item>
-        </v-list>
-      </v-navigation-drawer>
+    <v-spacer></v-spacer>
 
-  </v-card>
+    <v-btn variant="text" icon="mdi-magnify"></v-btn>
+
+    <v-btn variant="text" icon="mdi-filter"></v-btn>
+
+    <v-btn variant="text" icon="mdi-dots-vertical"></v-btn>
+  </v-app-bar>
 </template>
 
 <script lang='ts'>
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { useDisplay } from 'vuetify/lib/framework.mjs'
 
 export default defineComponent({
   name: 'NavBar',
+
   data () {
       return {
         drawer: true,
