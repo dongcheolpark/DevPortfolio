@@ -30,7 +30,7 @@
       <v-divider></v-divider>
 
       <v-card-text class="text-white">
-        {{ new Date().getFullYear() }} — <strong>ParkDongCheol</strong>
+        {{ new Date().getFullYear() }} — <strong>DongCheolPark</strong>
       </v-card-text>
     </v-card>
   </v-footer>
