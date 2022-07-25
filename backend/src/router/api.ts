@@ -1,12 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
 import connection from "../lib/DbConfig";
 
-export const testApiRouter = express.Router();
-testApiRouter.use(function (req, res, next) {
+export const APIRouter = express.Router();
+APIRouter.use(function (req, res, next) {
 	next();
 });
-testApiRouter.get('/getTest', async (req, res) => {
-	connection.query('SELECT * from test', (error, rows) => {
+
+APIRouter.get('/list', async (req, res) => {
+	connection.query('select * board', (error, rows) => {
 		try {
 			if (error) throw error;
 			console.log('User info is: ', rows);
@@ -18,5 +19,6 @@ testApiRouter.get('/getTest', async (req, res) => {
 				error: 'Can"t read api data',
 			});
 		}
-	});
-}); 
+	})
+});
+
