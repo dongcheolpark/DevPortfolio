@@ -35,6 +35,10 @@
     </v-card>
   </v-footer>
 </template>
+<style lang="sass" scoped>
+.foo-bar-color
+  background-color: #286155
+</style>
 <script lang="ts">
 import { defineComponent } from 'vue'
 
