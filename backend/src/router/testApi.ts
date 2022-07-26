@@ -20,3 +20,7 @@ testApiRouter.get('/getTest', async (req, res) => {
 		}
 	});
 }); 
+
+testApiRouter.get('/test',async (req,res) => {
+	res.send('hello');
+})

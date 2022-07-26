@@ -12,6 +12,13 @@ export default defineComponent({
 	name : "Admin",
 	components : {
 		Login,
-	}
+	},
+  data() {
+    return {
+      isLogin : true
+    }
+  },
+  beforeCreate() {
+  }
 })
 </script>

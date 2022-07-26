@@ -4,15 +4,19 @@
 			<h1>
 				Admin
 			</h1>
-			<form>
-				<input type="text" name="email" class="text-field" placeholder="아이디">
-				<input type="password" name="password" class="text-field" placeholder="비밀번호">
+			<form @submit="onLoginSubmit" method="post">
+				<input type="text" name="id" class="text-field" placeholder="아이디" v-model="id">
+				<input type="password" name="password" class="text-field" placeholder="비밀번호" v-model="pw">
 				<input type="submit" value="로그인" class="submit-btn">
 			</form>
-
 			<div class="links">
 				<a href="#">비밀번호를 잊어버리셨나요?</a>
 			</div>
+			<p>
+			<div v-bind:key="item.toString()" v-for="(item) in error">
+				{{ item }}
+			</div>
+			</p>
 		</div>
 	</v-container>
 </template>
@@ -71,5 +75,52 @@ input
 import Vue, { defineComponent } from 'vue'
 export default defineComponent({
 	name: 'Login',
+	data: () => {
+		return {
+			id: '',
+			pw: '',
+			error: [] as String[]
+		}
+	},
+	methods: {
+		onLoginSubmit(e: Event) {
+			e.preventDefault();
+			this.error = []
+			var check = false;
+			if (this.id == '') {
+				this.error.push('아이디를 입력해 주세요.');
+				check = true;
+			}
+			if (this.pw == '') {
+				this.error.push('비밀번호를 입력해 주세요.');
+				check = true;
+			}
+			if (check) {
+				return false;
+			}
+      const body = {
+          id : this.id,
+          password : this.pw
+        };
+			fetch('api/admin/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+        body : JSON.stringify(body)
+			}).then((res) => {
+        if(!res.ok) {
+          throw new Error('서버 에러');
+        }
+        res.json();
+      }).then((result) => {
+        console.log('성공' + result);
+      }).catch((err) => {
+        this.error.push(err);
+      })
+
+			return true;
+		}
+	}
 })
 </script>

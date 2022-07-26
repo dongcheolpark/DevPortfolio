@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import connection from "../lib/DbConfig";
+import { AdminRouter } from './API/admin';
 
 export const APIRouter = express.Router();
 APIRouter.use(function (req, res, next) {
@@ -21,4 +22,6 @@ APIRouter.get('/list', async (req, res) => {
 		}
 	})
 });
+
+APIRouter.use('/admin',AdminRouter);
 
