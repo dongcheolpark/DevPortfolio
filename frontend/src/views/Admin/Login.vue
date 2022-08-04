@@ -82,7 +82,7 @@ export default defineComponent({
       isLogin : islogin
     }
   },
-  beforeCreate() {
+  mounted() {
     fetch('/api/admin/login', {
       method: 'get'
     }).then((res) => {

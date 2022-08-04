@@ -1,9 +1,8 @@
 <template>
   <v-app>
     <v-main class="ma-0 pa-0">
-      <nav-bar/>
       <router-view/>
-      <foo-bar/>
+      <foo-bar v-if="foobar"/>
     </v-main>
   </v-app>
 </template>
@@ -19,8 +18,12 @@ export default defineComponent({
 
   data () {
     return {
-      //
+      foobar : true
     }
   },
+  mounted() {
+    this.emitter.on("foobar",(res) => this.foobar = res as boolean);
+    console.log(this.foobar);
+  }
 })
 </script>

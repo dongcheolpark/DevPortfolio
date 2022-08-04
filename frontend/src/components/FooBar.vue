@@ -21,9 +21,9 @@
         ></v-btn>
         <v-btn
           class="mx-4"
-          icon="mdi-web"
+          icon="mdi-account-key"
           variant="plain"
-		  v-on:click="openLink('https://velog.io/@head022')"
+          @click="gotoadmin()"
         ></v-btn>
       </v-card-text>
 
@@ -46,7 +46,11 @@ export default defineComponent({
 	methods: {
 		openLink : (url : string) => {
 			window.open(url);
-		}
+		},
+    gotoadmin() {
+      this.$router.push('/admin');
+      window.scrollTo(0,0);
+    }
 	}
 })
 </script>
