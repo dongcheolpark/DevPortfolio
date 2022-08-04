@@ -1,9 +1,9 @@
 <template>
-  <v-app-bar 
+  <v-app-bar
     collapse
   >
     <v-btn variant="text" icon="mdi-home" href="/"></v-btn>
-    <v-btn variant="text" icon="mdi-account-key" href="Admin"></v-btn>
+    <v-btn variant="text" icon="mdi-account-key" href="/Admin"></v-btn>
   </v-app-bar>
 </template>
 

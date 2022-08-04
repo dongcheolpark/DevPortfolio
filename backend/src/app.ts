@@ -1,20 +1,25 @@
 import express, { Request, Response, NextFunction, Router } from 'express';
 import { testApiRouter } from './router/testApi';
-import { APIRouter } from './router/api';
 import { home } from './router/home';
+import { APIRouter } from './router/api';
+import { refererCheck } from './middleware/referCheck';
+import { sessionData } from './lib/DbConfig';
 const app = express();
+
+/// <middle-ware>
+app.use(sessionData);
+app.use(refererCheck);
+/// </middle-ware>
 
 /// <backend-router> 
 app.use('/testapi',testApiRouter);
-app.use('/api,',APIRouter);
-app.use('/.well-known',express.Router().get('/acme-challenge/VGxbCYzhs2N4cgqK86z3d3uuFVY6KwDeLxuicJIdquo',async (req,res) => {
-  res.send('VGxbCYzhs2N4cgqK86z3d3uuFVY6KwDeLxuicJIdquo.Vw_s_h3rVig6w1KrvLYX2AHVdqdIiPn8y3TU6nUyAv4')
-}))
+app.use('/api',APIRouter);
 /// </backend-router> 
 
 /// <frontend-router> 
 app.use('/',home);
 app.use('/about',home);
+app.use('/admin',home);
 /// </frontend-router> 
 
 app.use(express.static('public'));

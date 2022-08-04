@@ -1,16 +1,15 @@
 <template>
   <v-app>
     <v-main class="ma-0 pa-0">
-      <nav-bar/>
       <router-view/>
-      <foo-bar/>
+      <foo-bar v-if="foobar"/>
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import NavBar from '@/components/NavBar.vue'
+import NavBar from './components/NavBar.vue'
 import FooBar from './components/FooBar.vue'
 
 export default defineComponent({
@@ -19,8 +18,12 @@ export default defineComponent({
 
   data () {
     return {
-      //
+      foobar : true
     }
   },
+  mounted() {
+    this.emitter.on("foobar",(res) => this.foobar = res as boolean);
+    console.log(this.foobar);
+  }
 })
 </script>

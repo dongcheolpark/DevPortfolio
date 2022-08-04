@@ -4,11 +4,11 @@ module.exports = {
 
     devServer: { 
 		proxy: { // proxyTable 설정
-			'/testapi': {
-				target: 'http://localhost:3000/testapi',
+			'/api': {
+				target: 'http://localhost:3000/api',
 				changeOrigin: true	,
                 pathRewrite:{
-					"^/testapi" : ''
+					"^/api" : ''
 				}
 			}
 		}
