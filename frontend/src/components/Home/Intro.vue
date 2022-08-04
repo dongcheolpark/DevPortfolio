@@ -10,7 +10,7 @@
 .full-screen
   width:100%
   height: 100vh
-.IntroContainer 
+.IntroContainer
   display: flex
   justify-content: center
   align-items: center
@@ -18,6 +18,7 @@
   background-position: center
   background-image : url('~@/assets/Intro/IntroBackground.jpg')
 .IntroThumbnail
+
 .IntroText
   text-align : center
   font-family: 'Nanum Gothic', sans-serif

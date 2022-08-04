@@ -11,7 +11,23 @@ AdminRouter.use(function (req, res, next) {
 
 //로그인
 
+AdminRouter.get('/login',(req,res) => {
+	if(req.session != undefined) {
+		return res.send({
+			isLogin : true
+		});
+	}
+	return res.send({
+		isLogin : false
+	})
+})
+
 AdminRouter.post('/login',(req,res) => {
+	if(req.session != undefined) {
+		return res.send({
+			isLogin : true
+		})
+	}
 	var id : string = req.body.id;
 	var password : string = req.body.password;
 	const queryString = `
@@ -32,7 +48,10 @@ AdminRouter.post('/login',(req,res) => {
 							console.log(err);
 							return res.status(500).send("<h1>500 error</h1>");
 					}
-					res.send('get session');
+					res.send({
+						success : true,
+						message : `${id}님 로그인 되었습니다.`
+					});
 				});
 			}
 			else {
