@@ -24,7 +24,13 @@ const routes: Array<RouteRecordRaw> = [
     path:'/admin/Login',
     name: 'Admin_Login',
     component: () => import('../views/Admin/Login.vue')
+  },
+  {
+    path:'/admin/Editor',
+    name: 'Admin_Editor',
+    component: () => import('../views/Admin/Editor.vue')
   }
+
 ]
 
 const router = createRouter({

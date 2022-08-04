@@ -1,8 +1,10 @@
 <template>
   <div class="AdminParent">
+    <v-btn class="CreateBtn" @click="ClickCreateBtn()">
+      Create
+    </v-btn>
     <v-container>
-      <v-row align="center" justify="center" class="ma-3"
-       v-for="item in items" v-bind:key="item.title">
+      <v-row align="center" justify="center" class="ma-3" v-for="item in items" v-bind:key="item.title">
         <v-card class="ListItem">
           <v-list>
             <v-list-item style="width : 100%; justify-content: space-between;">
@@ -30,6 +32,11 @@
 $main-color : #1BBC9B
 $background-color: #5CE0C6
 
+.CreateBtn
+  position: fixed
+  right: 1vh
+  top : 1vh
+
 .AdminParent
   min-height: 100%
   padding : 8vh
@@ -46,7 +53,6 @@ $background-color: #5CE0C6
   white-space: normal
   overflow: hidden
   text-align: ellipsis
-
 .ListItemBtn
   background: $main-color
   color : #fff
@@ -67,7 +73,7 @@ export default defineComponent({
           title: "제목입니다.",
           period: "2000.01.01 ~ 2000.12.31",
           discription: "Morbi mattis ullamcorper velit. Donec orci lectus, aliquam ut, faucibus non, euismod id, nulla. Fusce convallis metus id felis luctus adipiscing. Aenean massa. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nulla consequat massa quis enim. Praesent venenatis metus at tortor pulvinar varius. Donec venenatis vulputate lorem. Phasellus accumsan cursus velit. Pellentesque ut neque.",
-          id : 3
+          id: 3
         },
       ],
     }
@@ -86,8 +92,13 @@ export default defineComponent({
       }
     });
   },
+  methods : {
+    ClickCreateBtn : function() {
+      this.$router.push('/Admin/Editor');
+    }
+  },
   created() {
 
-  }
+  },
 })
 </script>
