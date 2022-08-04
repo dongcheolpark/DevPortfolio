@@ -1,8 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
 import connection from "../lib/DbConfig";
+import { refererCheck } from '../middleware/referCheck';
 import { AdminRouter } from './API/admin';
 
 export const APIRouter = express.Router();
+APIRouter.use(refererCheck);
 APIRouter.use(function (req, res, next) {
 	next();
 });
