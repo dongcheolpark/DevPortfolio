@@ -2,7 +2,7 @@
   <v-app>
     <v-main class="ma-0 pa-0">
       <router-view/>
-      <foo-bar v-if="foobar"/>
+      <foo-bar v-if="footerVisible == true"/>
     </v-main>
   </v-app>
 </template>
@@ -12,18 +12,22 @@ import { defineComponent } from 'vue'
 import NavBar from './components/NavBar.vue'
 import FooBar from './components/FooBar.vue'
 
+import router from './router/index'
+
+
 export default defineComponent({
   components: { NavBar, FooBar },
   name: 'App',
 
   data () {
     return {
-      foobar : true
+      footerVisible : true
     }
   },
   mounted() {
-    this.emitter.on("foobar",(res) => this.foobar = res as boolean);
-    console.log(this.foobar);
+    router.afterEach((to, from) => {
+      this.footerVisible = (to.path !== '/Admin/Editor') // 푸터 지우기
+    })
   }
 })
 </script>

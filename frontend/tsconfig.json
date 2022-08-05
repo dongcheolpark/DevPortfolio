@@ -18,11 +18,15 @@
     "maxNodeModuleJsDepth": 0,
     "types": [
       "webpack-env",
-      "jest"
+      "jest",
+      "BoardItem"
     ],
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "@model/*" : [
+        "../models/*"
       ]
     },
     "lib": [
@@ -37,8 +41,9 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
-, "vue.config.js"],
+    "tests/**/*.tsx",
+    "../models/**/*.ts"
+    , "vue.config.js"],
   "exclude": [
     "node_modules"
   ]

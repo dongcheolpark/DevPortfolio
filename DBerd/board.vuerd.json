@@ -4,7 +4,7 @@
     "width": 2000,
     "height": 2000,
     "scrollTop": -3,
-    "scrollLeft": -357,
+    "scrollLeft": -101,
     "zoomLevel": 1,
     "show": {
       "tableComment": true,
@@ -19,7 +19,7 @@
     },
     "database": "MySQL",
     "databaseName": "",
-    "canvasType": "@vuerd/builtin-sql-ddl",
+    "canvasType": "@vuerd/builtin-generator-code",
     "language": "GraphQL",
     "tableCase": "pascalCase",
     "columnCase": "camelCase",
@@ -356,10 +356,10 @@
           }
         ],
         "ui": {
-          "active": true,
+          "active": false,
           "left": 1114,
           "top": 163,
-          "zIndex": 50,
+          "zIndex": 3,
           "widthName": 60,
           "widthComment": 60
         },

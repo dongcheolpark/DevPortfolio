@@ -2,11 +2,18 @@
   <div class="EditorParent">
     <div class="Sides Contents">
       <div class="topContents">
-        <textarea></textarea>
+        <textarea v-model="title"></textarea>
         <v-divider class="mb-2"></v-divider>
       </div>
       <VimEditor></VimEditor>
-      <div class="footer"></div>
+      <div class="footer">
+        <v-btn @click="onClickExit()">
+          Exit
+        </v-btn>
+        <v-btn @click="test()">
+          Create
+        </v-btn>
+      </div>
     </div>
     <div class="Sides Preview" v-html="compiledMarkdown"></div>
   </div>
@@ -31,13 +38,17 @@
 .Sides
   display: inline-block
   width: 50%
-  height: 100%
+  height: 80%
   vertical-align: top
   box-sizing: border-box
   padding: 0
 .Preview
   padding : 12vh
 .footer
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding-inline: 2rem
   position: fixed
   bottom: 0px
   height: 5rem
@@ -61,28 +72,47 @@ import Vue, { defineComponent } from 'vue'
 import * as _ from 'lodash'
 import { Marked } from 'marked-ts'
 import VimEditor from '../../components/Admin/VimEditor.vue'
-
+import {types} from '@model/BoardItem'
 
 export default defineComponent({
     name: "Editor",
+    components: { VimEditor },
     data() {
         return {
-            input: "",
+          title : "",
+          contents: "",
         };
     },
-    beforeCreate() {
-      this.emitter.emit('footer',false);
-    },
     mounted(){
-      this.emitter.on('EditorValue',(value) => this.input = value as string)
+      this.emitter.on('EditorValue',(value) => this.contents = value as string)
     },
     computed: {
         compiledMarkdown: function () {
             var x: string;
-            x = `${this.input}`;
+            x = `${this.contents}`;
             return Marked.parse(x);
         }
     },
-    components: { VimEditor }
+    methods: {
+      onClickExit() {
+        this.$router.back();
+      },
+      test() {
+      },
+      submit() {
+        var data : types.ProjectCreate = {
+          title: this.title,
+          startdate: '',
+          enddate: '',
+          contents: this.contents,
+          image: '',
+          url: ''
+          };
+        fetch('/api/admin/create',{
+          method : 'post',
+
+        })
+      }
+    }
 })
 </script>
