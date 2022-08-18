@@ -1,30 +1,57 @@
 import express, { Request, Response, NextFunction, Router } from 'express';
-import { testApiRouter } from './router/testApi';
 import { home } from './router/home';
-import { APIRouter } from './router/api';
 import { sessionData } from './lib/DbConfig';
-const app = express();
+import { Controller } from './common/interfaces/Icontroller';
+import { ErrorMiddleware } from './middleware/errorMiddleware';
+import LoginController from './API/login';
+import { PortfolioController } from './API/portfolio';
 
-/// <middle-ware>
-app.use(sessionData);
-/// </middle-ware>
+class App {
+  private app : express.Application;
 
-/// <backend-router> 
-app.use('/testapi',testApiRouter);
-app.use('/api',APIRouter);
-/// </backend-router> 
+  constructor(controller : Controller[]) {
+    this.app = express();
 
-/// <frontend-router> 
-app.use('/',home);
-app.use('/about',home);
-app.use('/admin',home);
-/// </frontend-router> 
+    this.initialMiddleWare();
+    this.initialController(controller);
 
-app.use(express.static('public'));
+    this.app.use(ErrorMiddleware);
+  }
 
-const port = process.env.PORT || 3000;
+  public startServer() {
+    const port = process.env.PORT || 3000;
+    this.app.listen(port, () => {
+      console.log(`http://localhost:${port}/`);
+    })
+  }
 
-app.listen(port, () => {
-  console.log('listen ' + port)
-})
- 
+  private initialMiddleWare() {
+    this.app.use(sessionData);
+  }
+
+  private initialController(controllers : Controller[]) {
+    const router = Router();
+
+    router.get('/', (req, res) => res.send('OK'));
+
+    controllers.forEach((controller) => {
+      router.use(controller.router);
+    });
+
+    this.app.use('/api', router);
+  }
+  private initialFrontRouter() {
+    this.app.use('/',home);
+    this.app.use('/about',home);
+    this.app.use('/admin',home);
+
+    this.app.use(express.static('public'));
+  }
+}
+
+const app = new App([
+  new LoginController(),
+  new PortfolioController()
+]);
+
+app.startServer();

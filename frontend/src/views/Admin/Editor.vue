@@ -10,7 +10,7 @@
         <v-btn @click="onClickExit()">
           Exit
         </v-btn>
-        <v-btn @click="test()">
+        <v-btn @click="submit()">
           Create
         </v-btn>
       </div>
@@ -108,9 +108,19 @@ export default defineComponent({
           image: '',
           url: ''
           };
+        fetch('/api/admin/test').then((res) => {
+          console.log(res);
+        });
         fetch('/api/admin/create',{
           method : 'post',
-
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        }).then(
+          (res) => res.json() as unknown as types.Board
+        ).then((res) => {
+          this.$router.push(`/admin/${res.boardid}`);
         })
       }
     }
