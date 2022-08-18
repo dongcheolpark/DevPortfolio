@@ -2,8 +2,9 @@ import { Controller } from "@/common/interfaces/Icontroller";
 import sqlPool from "../lib/DbConfig";
 import { Router } from "express";
 import { Handler,wrap} from "../lib/request-handler"
-import { HttpException } from "../common/exception/httpException";
 import { Board, ProjectCreate } from "@model/BoardItem";
+import { InternalServerException } from "../common/exception/InternalServerException";
+import { ResultSetHeader } from "mysql2";
 
 export class PortfolioController implements Controller {
 	path = '/portfolio';
@@ -28,18 +29,21 @@ export class PortfolioController implements Controller {
 		return rows;
 	}
 	post : Handler = async (req,res) => {
-		var body = req.body as ProjectCreate;
-		console.log(body);
+		try {
+			const body = req.body as ProjectCreate;
+			const connection = sqlPool.promise()
 
-		var board : Board = {
-			boardid: 2,
-			title: body.title,
-			image: '',
-			url: '',
-			startdate: '',
-			enddate: '',
-			discription: ''
+			const requestRes  = await connection.query(`insert into board (title,startdate,enddate,discription)
+			 values ('${body.title}','${body.startdate}','${body.enddate}','${body.contents.substring(0,100)}');`);
+			const id = (requestRes as ResultSetHeader[])[0].insertId;
+
+			const board = await connection.query(`select * from board where boardid = ${id}`);
+			
+			return board[0];
 		}
-		return board;
+		catch (err) {
+			console.log((err as Error).message);
+			throw new InternalServerException();
+		}
 	}
 }

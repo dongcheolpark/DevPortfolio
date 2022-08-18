@@ -6,6 +6,7 @@ import { ErrorMiddleware } from './middleware/errorMiddleware';
 import LoginController from './API/login';
 import { PortfolioController } from './API/portfolio';
 import { ForbidenMiddleware } from './middleware/ForbidenMiddleware';
+import bodyParser from 'body-parser'
 
 class App {
   private app : express.Application;
@@ -16,6 +17,7 @@ class App {
     this.initialMiddleWare();
 
     this.initialController(controller);
+    this.initialFrontRouter();
 
     this.app.use(ForbidenMiddleware);
     this.app.use(ErrorMiddleware);
@@ -30,6 +32,7 @@ class App {
 
   private initialMiddleWare() {
     this.app.use(sessionData);
+    this.app.use(bodyParser.json());
   }
 
   private initialController(controllers : Controller[]) {
@@ -44,11 +47,12 @@ class App {
     this.app.use('/api', router);
   }
   private initialFrontRouter() {
+    this.app.use(express.static('public'));
+
     this.app.use('/',home);
     this.app.use('/about',home);
     this.app.use('/admin',home);
 
-    this.app.use(express.static('public'));
   }
 }
 
