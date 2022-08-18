@@ -75,7 +75,7 @@ export default defineComponent({
   data() {
     return {
       isLoading : false,
-      items : new Array<Board>()
+      items : [] as Board[]
     }
   },
   beforeCreate() {

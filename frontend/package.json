@@ -4,7 +4,7 @@
   "private": true,
   "typings": "main.d.ts",
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
@@ -23,6 +23,7 @@
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",
+    "vue3-datepicker": "^0.3.4",
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {

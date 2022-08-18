@@ -1,10 +1,18 @@
 <template>
-  <div>
+  <div class="EditorParent">
     <div class="EditorParent">
       <div class="Sides Contents">
         <div class="topContents">
-          <textarea v-model="title"></textarea>
+          <textarea v-model="title" placeholder="제목을 입력하세요."></textarea>
           <v-divider class="mb-2"></v-divider>
+          <div class="dateFormBox">
+            <datepicker
+              v-model="startdate"
+            />
+            <datepicker
+              v-model="enddate"
+            />
+          </div>
         </div>
         <VimEditor></VimEditor>
         <div class="footer">
@@ -23,16 +31,19 @@
 <style lang="sass" scoped>
 .topContents
   margin : 1vh
+  padding: 2vh
 .topContents textarea
   border: none
   resize: none
   outline: none
   font-size: 32px
   font-family: "Monaco", courier, monospace
-  padding: 20px
+  padding: 10px
   height: 5rem
   width: 100%
 
+.dateFormBox
+   display: flex
 .EditorParent
   height: 100%
 .Titles
@@ -69,12 +80,18 @@
     width: 100%
 
 </style>
+<script setup lang="ts">
+import Datepicker from 'vue3-datepicker'
+
+</script>
+
 <script lang="ts">
 import Vue, { defineComponent } from 'vue'
 import * as _ from 'lodash'
 import { Marked } from 'marked-ts'
 import VimEditor from '../../components/Admin/VimEditor.vue'
 import { Board, ProjectCreate } from '@model/BoardItem'
+import { portfolioConnection } from '@/common/connectBack/Connections/portfolioConnection'
 
 export default defineComponent({
   name: "Editor",
@@ -83,10 +100,13 @@ export default defineComponent({
     return {
       title: "",
       contents: "",
+      startdate : new Date(),
+      enddate :  new Date()
     };
   },
   mounted() {
     this.emitter.on('EditorValue', (value) => this.contents = value as string)
+    const tmp = new Date();
   },
   computed: {
     compiledMarkdown: function () {
@@ -99,31 +119,20 @@ export default defineComponent({
     onClickExit() {
       this.$router.back();
     },
-    test() {
-    },
-    submit() {
+    async submit() {
+      var convertDateToString = (date : Date) : string => {
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+      }
       var data: ProjectCreate = {
         title: this.title,
-        startdate: '',
-        enddate: '',
+        startdate: convertDateToString(this.startdate as Date),
+        enddate: convertDateToString(this.enddate as Date),
         contents: this.contents,
         image: '',
         url: ''
       };
-      fetch('/api/admin/test').then((res) => {
-        console.log(res);
-      });
-      fetch('/api/admin/create', {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      }).then(
-        (res) => res.json() as unknown as Board
-      ).then((res) => {
-        this.$router.push(`/admin/${res.boardid}`);
-      })
+      const res = await portfolioConnection.post(data);
+      this.$router.push(`/admin/${(res as Board).boardid}`);
     }
   }
 })
