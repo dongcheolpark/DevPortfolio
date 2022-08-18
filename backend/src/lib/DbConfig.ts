@@ -1,5 +1,5 @@
 import "./env";
-import MySQL from 'mysql';
+import MySQL from 'mysql2';
 import session from 'express-session';
 const MySqlStore = require('express-mysql-session')(session);
 
@@ -11,7 +11,7 @@ const option = {
 	database: process.env.dbdatabase
 }
 
-const sqlConnection = MySQL.createConnection(option);
+const sqlPool = MySQL.createPool(option);
 
 const mySqlSession = new MySqlStore(option);
 
@@ -31,6 +31,6 @@ const sessionData = session({
 	store: mySqlSession
 })
 
-export { sqlConnection, sessionData }
+export { sqlPool as sqlConnection, sessionData }
 
-export default sqlConnection;
+export default sqlPool;

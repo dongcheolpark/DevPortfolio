@@ -2,6 +2,7 @@
   "name": "devportfolio",
   "version": "0.1.0",
   "private": true,
+  "typings": "main.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -19,11 +20,9 @@
     "roboto-fontface": "*",
     "tsc": "^2.0.4",
     "typescript": "~4.1.5",
-    "vim.js": "^0.1.2",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",
-    "vuetify": "^3.0.0-beta.0",
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
