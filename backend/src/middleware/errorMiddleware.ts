@@ -15,6 +15,4 @@ export const ErrorMiddleware : ErrorRequestHandler = (
   res.status(error.status).send(
     makeReturnType(null,error)
   );
-
-  next();
 };

@@ -15,7 +15,6 @@ export const wrap = (handler: Handler) =>
       res.json(
         makeReturnType(response,null)
 			);
-      next();
     } catch (err) {
       next(new HttpException(500,(err as Error).message));
     }

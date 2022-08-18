@@ -1,21 +1,23 @@
 <template>
-  <div class="EditorParent">
-    <div class="Sides Contents">
-      <div class="topContents">
-        <textarea v-model="title"></textarea>
-        <v-divider class="mb-2"></v-divider>
+  <div>
+    <div class="EditorParent">
+      <div class="Sides Contents">
+        <div class="topContents">
+          <textarea v-model="title"></textarea>
+          <v-divider class="mb-2"></v-divider>
+        </div>
+        <VimEditor></VimEditor>
+        <div class="footer">
+          <v-btn @click="onClickExit()">
+            Exit
+          </v-btn>
+          <v-btn @click="submit()">
+            Create
+          </v-btn>
+        </div>
       </div>
-      <VimEditor></VimEditor>
-      <div class="footer">
-        <v-btn @click="onClickExit()">
-          Exit
-        </v-btn>
-        <v-btn @click="submit()">
-          Create
-        </v-btn>
-      </div>
+      <div class="Sides Preview" v-html="compiledMarkdown"></div>
     </div>
-    <div class="Sides Preview" v-html="compiledMarkdown"></div>
   </div>
 </template>
 <style lang="sass" scoped>
@@ -72,57 +74,57 @@ import Vue, { defineComponent } from 'vue'
 import * as _ from 'lodash'
 import { Marked } from 'marked-ts'
 import VimEditor from '../../components/Admin/VimEditor.vue'
-import {types} from '@model/BoardItem'
+import { Board, ProjectCreate } from '@model/BoardItem'
 
 export default defineComponent({
-    name: "Editor",
-    components: { VimEditor },
-    data() {
-        return {
-          title : "",
-          contents: "",
-        };
-    },
-    mounted(){
-      this.emitter.on('EditorValue',(value) => this.contents = value as string)
-    },
-    computed: {
-        compiledMarkdown: function () {
-            var x: string;
-            x = `${this.contents}`;
-            return Marked.parse(x);
-        }
-    },
-    methods: {
-      onClickExit() {
-        this.$router.back();
-      },
-      test() {
-      },
-      submit() {
-        var data : types.ProjectCreate = {
-          title: this.title,
-          startdate: '',
-          enddate: '',
-          contents: this.contents,
-          image: '',
-          url: ''
-          };
-        fetch('/api/admin/test').then((res) => {
-          console.log(res);
-        });
-        fetch('/api/admin/create',{
-          method : 'post',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        }).then(
-          (res) => res.json() as unknown as types.Board
-        ).then((res) => {
-          this.$router.push(`/admin/${res.boardid}`);
-        })
-      }
+  name: "Editor",
+  components: { VimEditor },
+  data() {
+    return {
+      title: "",
+      contents: "",
+    };
+  },
+  mounted() {
+    this.emitter.on('EditorValue', (value) => this.contents = value as string)
+  },
+  computed: {
+    compiledMarkdown: function () {
+      var x: string;
+      x = `${this.contents}`;
+      return Marked.parse(x);
     }
+  },
+  methods: {
+    onClickExit() {
+      this.$router.back();
+    },
+    test() {
+    },
+    submit() {
+      var data: ProjectCreate = {
+        title: this.title,
+        startdate: '',
+        enddate: '',
+        contents: this.contents,
+        image: '',
+        url: ''
+      };
+      fetch('/api/admin/test').then((res) => {
+        console.log(res);
+      });
+      fetch('/api/admin/create', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      }).then(
+        (res) => res.json() as unknown as Board
+      ).then((res) => {
+        this.$router.push(`/admin/${res.boardid}`);
+      })
+    }
+  }
 })
 </script>

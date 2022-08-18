@@ -4,8 +4,12 @@
       Create
     </v-btn>
     <v-container>
+      <v-progress-circular v-if="!isLoading"
+      indeterminate
+      color="primary"
+      ></v-progress-circular>
       <v-row align="center" justify="center" class="ma-3" v-for="item in items" v-bind:key="item.title">
-        <v-card class="ListItem">
+        <v-card v-if="isLoading" class="ListItem">
           <v-list>
             <v-list-item style="width : 100%; justify-content: space-between;">
               <div>
@@ -13,7 +17,7 @@
                   {{ item.title }}
                 </v-list-item-title>
                 <v-list-item-subtitle class="text-right">
-                  {{ item.period }}
+                  {{ item.startdate }} - {{ item.enddate }}
                 </v-list-item-subtitle>
               </div>
               <v-btn class="ListItemBtn">Edit</v-btn>
@@ -59,7 +63,9 @@ $background-color: #5CE0C6
 </style>
 
 <script lang="ts">
+import { portfolioConnection } from '@/common/connectBack/Connections/portfolioConnection';
 import { defineComponent } from 'vue'
+import { Board } from '@model/BoardItem';
 
 
 export default defineComponent({
@@ -68,37 +74,22 @@ export default defineComponent({
   },
   data() {
     return {
-      items: [
-        {
-          title: "제목입니다.",
-          period: "2000.01.01 ~ 2000.12.31",
-          discription: "Morbi mattis ullamcorper velit. Donec orci lectus, aliquam ut, faucibus non, euismod id, nulla. Fusce convallis metus id felis luctus adipiscing. Aenean massa. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nulla consequat massa quis enim. Praesent venenatis metus at tortor pulvinar varius. Donec venenatis vulputate lorem. Phasellus accumsan cursus velit. Pellentesque ut neque.",
-          id: 3
-        },
-      ],
+      isLoading : false,
+      items : new Array<Board>()
     }
   },
   beforeCreate() {
-    fetch('/api/admin/login', {
-      method: 'get'
-    }).then((res) => {
-      if (!res.ok) {
-        throw new Error('서버 에러');
-      }
-      return res.json();
-    }).then((res) => {
-      if (!res.isLogin) {
-        this.$router.push('/Admin/Login');
-      }
-    });
   },
   methods : {
     ClickCreateBtn : function() {
       this.$router.push('/Admin/Editor');
     }
   },
-  created() {
-
+  async created() {
+    const res = await portfolioConnection.get();
+    this.items = res;
+    this.isLoading = true;
+    console.log(res);
   },
 })
 </script>

@@ -1,7 +1,6 @@
 import express, {Router, Request, Response, NextFunction, json} from 'express';
 import sqlPool from "../lib/DbConfig";
 import bodyParser from 'body-parser';
-import {types} from '@model/BoardItem'
 import { Controller } from "@/common/interfaces/Icontroller";
 import { Handler, wrap } from '../lib/request-handler';
 import { HttpException } from '../common/exception/httpException';

@@ -1,9 +1,9 @@
 import { Controller } from "@/common/interfaces/Icontroller";
 import sqlPool from "../lib/DbConfig";
-import { types } from "@model/BoardItem";
 import { Router } from "express";
 import { Handler,wrap} from "../lib/request-handler"
 import { HttpException } from "../common/exception/httpException";
+import { Board, ProjectCreate } from "@model/BoardItem";
 
 export class PortfolioController implements Controller {
 	path = '/portfolio';
@@ -28,10 +28,10 @@ export class PortfolioController implements Controller {
 		return rows;
 	}
 	post : Handler = async (req,res) => {
-		var body = req.body as types.ProjectCreate;
+		var body = req.body as ProjectCreate;
 		console.log(body);
 
-		var board : types.Board = {
+		var board : Board = {
 			boardid: 2,
 			title: body.title,
 			image: '',

@@ -5,6 +5,7 @@ import { Controller } from './common/interfaces/Icontroller';
 import { ErrorMiddleware } from './middleware/errorMiddleware';
 import LoginController from './API/login';
 import { PortfolioController } from './API/portfolio';
+import { ForbidenMiddleware } from './middleware/ForbidenMiddleware';
 
 class App {
   private app : express.Application;
@@ -13,8 +14,10 @@ class App {
     this.app = express();
 
     this.initialMiddleWare();
+
     this.initialController(controller);
 
+    this.app.use(ForbidenMiddleware);
     this.app.use(ErrorMiddleware);
   }
 
