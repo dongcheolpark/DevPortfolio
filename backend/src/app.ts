@@ -31,7 +31,7 @@ class App {
   }
 
   private initialMiddleWare() {
-    this.app.use(sessionData);
+    //this.app.use(sessionData);
     this.app.use(bodyParser.json());
   }
 
