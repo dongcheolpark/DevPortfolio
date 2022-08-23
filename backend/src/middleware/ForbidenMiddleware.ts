@@ -1,5 +1,5 @@
-import { ForbidenException } from "../common/exception/ForbidenException";
-import { returnError, makeReturnType } from "../../../models/ReturnType";
+import { ForbidenException } from "@/common/exception/ForbidenException";
+import { returnError, makeReturnType } from "@model/ReturnType";
 import {Handler, Request, Response } from "express";
 
 export const ForbidenMiddleware : Handler = (req,res,next) =>{

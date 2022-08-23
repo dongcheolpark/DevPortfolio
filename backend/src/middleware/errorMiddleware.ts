@@ -1,6 +1,6 @@
 import { ErrorRequestHandler } from "express";
 import {HttpException} from "@/common/exception/httpException"
-import { makeReturnType, returnError } from "../../../models/ReturnType";
+import { makeReturnType, returnError } from "@model/ReturnType";
 
 export const ErrorMiddleware : ErrorRequestHandler = (
 	err: HttpException,

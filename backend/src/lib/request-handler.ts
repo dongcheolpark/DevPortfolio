@@ -1,6 +1,6 @@
-import { makeReturnType } from '../../../models/ReturnType';
+import { makeReturnType } from '@model/ReturnType';
 import { NextFunction, Request, Response } from 'express';
-import { HttpException } from '../common/exception/httpException';
+import { HttpException } from '@/common/exception/httpException';
 
 export type Handler = (
   req: Request,
