@@ -13,7 +13,8 @@
 				"src/*"
 			],
 			"@model/*" : [
-				"../models/*"
+				"../models/*",
+                "./models/*"
 			]
 		},
     },
