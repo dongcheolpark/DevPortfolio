@@ -10,12 +10,9 @@ COPY ./backend/package*.json ./
 
 RUN npm install --only=production
 
-RUN ["ls", "-a", "./backend"]
 # 앱 소스 추가
 COPY ./backend .
 COPY ./models ./models
-
-RUN ["ls"]
 
 EXPOSE 3000 
 
