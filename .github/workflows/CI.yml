@@ -4,7 +4,7 @@
 name: CI
 
 on:
-  push:
+  pull-request:
     branches: [ "master" ]
 
 jobs:
@@ -29,6 +29,7 @@ jobs:
         cd frontend
         npm ci
         npm run build
+        ls ../backend/public
         cd ..
     - name : Copy .Env file
       run : |
