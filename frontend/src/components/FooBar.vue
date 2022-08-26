@@ -11,7 +11,7 @@
           class="mx-4"
           icon="mdi-github"
           variant="plain"
-		  v-on:click="openLink('https://github.com/dongcheolpark')"
+		  v-on:click="openLink('https://github.com/dongcheolpark/devportfolio')"
         ></v-btn>
         <v-btn
           class="mx-4"

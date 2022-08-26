@@ -4,7 +4,13 @@ import 'vuetify/styles'
 
 // Vuetify
 import { createVuetify } from 'vuetify'
+import velogicon from '@/components/icons/velog.vue'
 
-export default createVuetify(
-  // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
-)
+export default createVuetify({
+  icons: {
+    velog : {
+      componet : velogicon
+    }
+  }
+})
+// https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides

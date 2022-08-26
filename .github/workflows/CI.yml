@@ -4,7 +4,7 @@
 name: CI
 
 on:
-  push:
+  pull_request:
     branches: [ "master" ]
 
 jobs:
@@ -55,6 +55,11 @@ jobs:
         registry: ghcr.io
         username: dongcheolpark
         password: ${{ secrets.TOKEN }}
+    - name : test
+      run : |
+        ls -a
+        ls -a ./backend
+
     # Buildx 로 Docker 이미지를 빌드하고 푸시하는 GitHub 작업이다.
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
