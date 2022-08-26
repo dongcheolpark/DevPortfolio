@@ -25,18 +25,27 @@ export class PortfolioController implements Controller {
 
 	get : Handler = async (req,res) => {
 		const connection = sqlPool.promise()
-		const [rows] = await connection.query('select * from board');
-		return rows;
+		if(req.query.id != undefined) {
+			const [rows] = await connection.query(`select board.*,project.contents from board join project on board.boardid = project.projectid where board.boardid = ${req.query.id}`);
+			return (rows as any)[0];
+		}
+		else {
+			const [rows] = await connection.query('select * from board');
+			return rows;
+		}
 	}
 	post : Handler = async (req,res) => {
 		try {
 			const body = req.body as ProjectCreate;
 			const connection = sqlPool.promise()
+			const querystring = `insert into board (title,startdate,enddate,discription)
+			 values ('${body.title}','${body.startdate}','${body.enddate}','${body.contents.substring(0,100)}');`;
+			const requestRes  = await connection.query(querystring);
 
-			const requestRes  = await connection.query(`insert into board (title,startdate,enddate,discription)
-			 values ('${body.title}','${body.startdate}','${body.enddate}','${body.contents.substring(0,100)}');`);
 			const id = (requestRes as ResultSetHeader[])[0].insertId;
 
+			await connection.query(`insert into project (projectid,contents) 
+			 values (${id},'${body.contents}')`);
 			const board = await connection.query(`select * from board where boardid = ${id}`);
 			
 			return board[0];

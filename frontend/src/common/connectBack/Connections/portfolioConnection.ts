@@ -1,7 +1,7 @@
 import { Board, ProjectCreate } from "@model/BoardItem";
-import { Connectons } from "./Connections";
+import { Connections } from "./Connections";
 
-class PortfolioConnection extends Connectons {
+class PortfolioConnection extends Connections {
 
   constructor() {
     super('portfolio');

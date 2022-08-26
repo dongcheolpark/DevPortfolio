@@ -20,7 +20,7 @@
                   {{ item.startdate }} - {{ item.enddate }}
                 </v-list-item-subtitle>
               </div>
-              <v-btn class="ListItemBtn">Edit</v-btn>
+              <v-btn class="ListItemBtn" @click="$router.push(`/admin/editor?id=${item.boardid}`)">Edit</v-btn>
             </v-list-item>
             <v-divider></v-divider>
             <v-list-item class="ListItemContents pa-1">

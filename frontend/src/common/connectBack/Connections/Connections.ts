@@ -2,7 +2,7 @@ import { Excpetions } from "@/common/Exception/Exceptions";
 import { returnError, returnType } from "@model/ReturnType";
 import { AxiosBack } from "../axiosback";
 
-export class Connectons {
+export class Connections {
   protected axiosback: AxiosBack;
   protected src : string;
 
