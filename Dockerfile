@@ -12,6 +12,7 @@ RUN npm install --only=production
 
 # 앱 소스 추가
 COPY ./backend .
+RUN ["ls"]
 COPY ./models ./models
 
 EXPOSE 3000 
