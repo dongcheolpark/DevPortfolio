@@ -1,22 +1,32 @@
 export type Board = {
-	boardid: Number
-	title: String
-	image: String
-	url: String
-	startdate: String
-	enddate: String
-	discription: String
+	boardid: number
+	title: string
+	image: string
+	url: string
+	startdate: string
+	enddate: string
+	discription: string
 }
 export type Project = {
 	projectid: Number
 	contents: String
 }
+export type ProjectDetail = {
+	projectid: Number
+	contents: string
+	title: string
+	image: string
+	url: string
+	startdate: string
+	enddate: string
+	discription: string
+}
 
 export type ProjectCreate = {
-	title: String
-	startdate: String
-	enddate: String
-	contents: String
-	image: String
-	url: String
+	title: string
+	startdate: string
+	enddate: string
+	contents: string
+	image: string
+	url: string
 }

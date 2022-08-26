@@ -20,7 +20,7 @@
             Exit
           </v-btn>
           <v-btn @click="submit()">
-            Create
+            {{ editmode ? "Edit" : "Create"}}
           </v-btn>
         </div>
       </div>
@@ -92,21 +92,35 @@ import { Marked } from 'marked-ts'
 import VimEditor from '../../components/Admin/VimEditor.vue'
 import { Board, ProjectCreate } from '@model/BoardItem'
 import { portfolioConnection } from '@/common/connectBack/Connections/portfolioConnection'
+import { portfolioDetailConnection } from '@/common/connectBack/Connections/portfolioDetailConnection'
 
 export default defineComponent({
   name: "Editor",
   components: { VimEditor },
+  async created() {
+    const id : number | undefined = this.$route.query.id as unknown as number | undefined;
+    if(id!= undefined) {
+      this.editmode = true;
+      const res = await portfolioDetailConnection.get(id);
+      console.log(res);
+      this.title = res!.title;
+      this.emitter.emit('EditorValue',res!.contents);
+      this.startdate = new Date(res!.startdate);
+      this.enddate = new Date(res!.enddate);
+    }
+  },
+  mounted() {
+    this.emitter.on('EditorValue', (value) => this.contents = value as string)
+    const tmp = new Date();
+  },
   data() {
     return {
+      editmode : false,
       title: "",
       contents: "",
       startdate : new Date(),
       enddate :  new Date()
     };
-  },
-  mounted() {
-    this.emitter.on('EditorValue', (value) => this.contents = value as string)
-    const tmp = new Date();
   },
   computed: {
     compiledMarkdown: function () {
@@ -132,7 +146,7 @@ export default defineComponent({
         url: ''
       };
       const res = await portfolioConnection.post(data);
-      this.$router.push(`/admin/${(res as Board).boardid}`);
+      this.$router.push(`/admin`);
     }
   }
 })

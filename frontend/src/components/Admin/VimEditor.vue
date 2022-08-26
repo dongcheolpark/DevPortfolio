@@ -27,6 +27,9 @@ export default defineComponent({
       }
     }
   },
+  mounted() {
+    this.emitter.on('EditorValue',(res) => this.input = res as string);
+  },
   watch : {
     input(newValue,OldValue) {
       this.emitter.emit('EditorValue',this.input)
