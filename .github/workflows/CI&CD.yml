@@ -65,14 +65,14 @@ jobs:
   deploy:
     runs-on : ubuntu-latest
     needs : build
-    - steps:
-    - name: multiple command
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSHHOST }}
-        username: ${{ secrets.SSHUSERNAME }}
-        password: ${{ secrets.SSHPASSWORD }}
-        script: |
-          docker pull ghcr.io/dongcheolpark/devportfolio:latest
-          docker stop portfolio_app
-          docker run -d --name portfolio_app -p 80:3000 ghcr.io/dongcheolpark/devportfolio:latest
+    steps:
+      - name: multiple command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSHHOST }}
+          username: ${{ secrets.SSHUSERNAME }}
+          password: ${{ secrets.SSHPASSWORD }}
+          script: |
+            docker pull ghcr.io/dongcheolpark/devportfolio:latest
+            docker stop portfolio_app
+            docker run -d --name portfolio_app -p 80:3000 ghcr.io/dongcheolpark/devportfolio:latest
