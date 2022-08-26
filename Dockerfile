@@ -14,6 +14,8 @@ RUN npm install --only=production
 COPY ./backend .
 COPY ./models ./models
 
+RUN ["ls"]
+
 EXPOSE 3000 
 
 CMD ["./run.sh"]
