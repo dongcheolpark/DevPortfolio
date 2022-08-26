@@ -1,11 +1,14 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import vue from 'vue'
 import Home from '../views/Home.vue'
+
+const basicTitle = '박동철의 포트폴리오';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
   },
   {
     path: '/about',
@@ -37,5 +40,10 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+router.beforeEach((to, from) => {
+  const title = to.meta.title === undefined ? basicTitle : to.meta.title as string;
+  document.title = title;
+});
 
 export default router

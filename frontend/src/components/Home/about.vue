@@ -25,16 +25,6 @@
   </v-container>
 </template>
 
-<style lang="sass" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@800&display=swap')
-.title
-  width : 100%
-.title_text
-  text-size : 2vw
-  font-family: 'Nanum Gothic', sans-serif
-  text-align: center
-</style>
-
 <script lang="ts">
 import { defineComponent } from 'vue'
 import AboutObject from './about-object.vue'
