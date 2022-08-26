@@ -61,7 +61,6 @@ jobs:
         context : .
         push: true
         tags: ghcr.io/dongcheolpark/devportfolio:latest
-jobs:
   Deploy:
     runs-on: ubuntu-latest
     - steps:
