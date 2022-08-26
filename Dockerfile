@@ -16,4 +16,4 @@ COPY ./models ./models
 
 EXPOSE 3000 
 
-CMD ["./backend/run.sh"]
+CMD ["./run.sh"]
