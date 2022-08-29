@@ -24,7 +24,7 @@
           </v-btn>
         </div>
       </div>
-      <div class="Sides Preview" v-html="compiledMarkdown"></div>
+      <div class="Sides Preview" v-html="sideWindow"></div>
     </div>
   </div>
 </template>
@@ -93,6 +93,7 @@ import VimEditor from '../../components/Admin/VimEditor.vue'
 import { Board, ProjectCreate } from '@model/BoardItem'
 import { portfolioConnection } from '@/common/connectBack/Connections/portfolioConnection'
 import { portfolioDetailConnection } from '@/common/connectBack/Connections/portfolioDetailConnection'
+import { compileMarkDown } from '@/common/CompileMarkdown'
 
 export default defineComponent({
   name: "Editor",
@@ -123,11 +124,11 @@ export default defineComponent({
     };
   },
   computed: {
-    compiledMarkdown: function () {
-      var x: string;
+    sideWindow : function() {
+      let x : string
       x = `${this.contents}`;
-      return Marked.parse(x);
-    }
+      return compileMarkDown(x);
+    },
   },
   methods: {
     onClickExit() {
