@@ -10,7 +10,7 @@ class PortfolioConnection extends Connections {
   get = async () => {
     try {
       const res = await this.axiosback.get(this.src);
-      return this.getResponse(res);
+      return this.getResponse(res) as Board[];
     }
     catch(err) {
       console.log(err);
