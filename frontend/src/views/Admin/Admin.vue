@@ -75,7 +75,7 @@ export default defineComponent({
   data() {
     return {
       isLoading : false,
-      items : [] as Board[]
+      items : [] as Board[],
     }
   },
   beforeCreate() {
@@ -86,10 +86,9 @@ export default defineComponent({
     }
   },
   async created() {
-    const res = await portfolioConnection.get();
-    this.items = res;
+    this.items = await portfolioConnection.get() ?? [];
     this.isLoading = true;
-    console.log(res);
+    console.log(this.items);
   },
 })
 </script>

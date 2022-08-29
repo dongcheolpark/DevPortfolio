@@ -9,33 +9,19 @@
       </v-col>
       <v-col></v-col>
     </v-row>
-    <v-row class="rowContainer my-5">
-      <v-carousel cycle height="400" class="carousel"
-       hide-delimiter-background progress="success">
-        <v-carousel-item v-for="(slide, i) in slides" :key="i">
-        	<v-hover
-          close-delay="200"
-          >
-          <v-sheet @click="test()" :color="colors[i]" height="100%">
-            <div class="d-flex fill-height justify-center align-center">
-              <div class="text-h2">
-                {{ slide }} Slide
+    <v-row v-if="portfoliodata.length != 0" class="rowContainer my-5">
+      <v-carousel cycle height="400" class="carousel" hide-delimiter-background progress="success">
+        <v-carousel-item v-for="(item, i) in portfoliodata" :key="i">
+          <v-hover close-delay="200">
+            <v-sheet @click="test()" :color="'success'" height="100%">
+              <div class="d-flex fill-height justify-center align-center">
+                <div class="text-h2">
+                  {{  item.title  }}
+                </div>
               </div>
-            </div>
-            <v-dialog
-        v-model="dialogs[i]"
-        activator="parent"
-      >
-        <v-card>
-          <v-card-text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </v-card-text>
-          <v-card-actions>
-            <v-btn color="primary" block @click="dialogs[i] = false">Close Dialog</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-          </v-sheet>
+              <portfolio-detail :portfoliodata="item">
+              </portfolio-detail>
+            </v-sheet>
           </v-hover>
         </v-carousel-item>
       </v-carousel>
@@ -51,37 +37,47 @@
   width: 100%
 </style>
 <script lang="ts">
+import { portfolioConnection } from '@/common/connectBack/Connections/portfolioConnection'
+import { Board } from '@model/BoardItem'
 import { method } from 'lodash'
 import Vue, { defineComponent } from 'vue'
+import PortfolioDetail from '../PortfolioDetail.vue'
 export default defineComponent({
-  data() {
-    return {
-      dialogs : [
-        false,
-        false,
-        false,
-        false,
-        false,
-      ],
-      colors: [
-        'indigo',
-        'warning',
-        'pink darken-2',
-        'red lighten-1',
-        'deep-purple accent-4',
-      ],
-      slides: [
-        'First',
-        'Second',
-        'Third',
-        'Fourth',
-        'Fifth',
-      ],
-    }
-  },
-  methods : {
-    test() {
-    }
-  }
+    data() {
+        return {
+            portfoliodata: [] as Board[],
+            dialogs: [
+                false,
+                false,
+                false,
+                false,
+                false,
+            ],
+            colors: [
+                "indigo",
+                "warning",
+                "pink darken-2",
+                "red lighten-1",
+                "deep-purple accent-4",
+            ],
+            slides: [
+                "First",
+                "Second",
+                "Third",
+                "Fourth",
+                "Fifth",
+            ],
+        };
+    },
+    async beforeCreate() {
+        this.portfoliodata = await portfolioConnection.get() ?? [];
+        console.log(await portfolioConnection.get());
+        console.log(this.portfoliodata);
+    },
+    methods: {
+        test() {
+        }
+    },
+    components: { PortfolioDetail }
 })
 </script>
