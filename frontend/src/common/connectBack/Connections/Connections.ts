@@ -11,8 +11,11 @@ export class Connections {
     this.src = src;
   }
 
-  protected getResponse(res : returnType) :  any {
+  protected getResponse<T>(res : returnType,changeType? : (value : any) => T) :  any {
     if(res.success) {
+      if(changeType != undefined) {
+        return changeType(res.response);
+      }
       return res.response;
     }
     else {

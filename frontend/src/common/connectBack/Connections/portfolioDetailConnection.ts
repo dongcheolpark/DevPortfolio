@@ -8,8 +8,11 @@ class portfolioDetiailConnection extends Connections {
 
 	get = async (id : number) => {
 		try{
-			const res = await this.axiosback.get(this.src + '?id=' + id);
-			return this.getResponse(res) as ProjectDetail;
+			let res = await this.axiosback.get(this.src + '?id=' + id);
+      res = this.getResponse(res);
+      res.startdate = new Date(res.startdate);
+      res.enddate = new Date(res.enddate);
+			return res as ProjectDetail;
 		}
 		catch(err) {
 			console.log(err);

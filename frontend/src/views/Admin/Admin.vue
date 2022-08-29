@@ -17,7 +17,7 @@
                   {{ item.title }}
                 </v-list-item-title>
                 <v-list-item-subtitle class="text-right">
-                  {{ item.startdate }} - {{ item.enddate }}
+                  {{ item.startdate.toLocaleDateString('kr') }} - {{ item.enddate.toLocaleDateString('kr') }}
                 </v-list-item-subtitle>
               </div>
               <v-btn class="ListItemBtn" @click="$router.push(`/admin/editor?id=${item.boardid}`)">Edit</v-btn>

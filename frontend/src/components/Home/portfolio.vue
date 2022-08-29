@@ -13,13 +13,13 @@
       <v-carousel cycle height="400" class="carousel" hide-delimiter-background progress="success">
         <v-carousel-item v-for="(item, i) in portfoliodata" :key="i">
           <v-hover close-delay="200">
-            <v-sheet @click="test()" :color="'success'" height="100%">
+            <v-sheet @click="test()"  :color="'success'" height="100%">
               <div class="d-flex fill-height justify-center align-center">
                 <div class="text-h2">
                   {{  item.title  }}
                 </div>
               </div>
-              <portfolio-detail :portfoliodata="item">
+              <portfolio-detail :portfoliodataid="item.boardid">
               </portfolio-detail>
             </v-sheet>
           </v-hover>
@@ -46,33 +46,10 @@ export default defineComponent({
     data() {
         return {
             portfoliodata: [] as Board[],
-            dialogs: [
-                false,
-                false,
-                false,
-                false,
-                false,
-            ],
-            colors: [
-                "indigo",
-                "warning",
-                "pink darken-2",
-                "red lighten-1",
-                "deep-purple accent-4",
-            ],
-            slides: [
-                "First",
-                "Second",
-                "Third",
-                "Fourth",
-                "Fifth",
-            ],
         };
     },
     async beforeCreate() {
         this.portfoliodata = await portfolioConnection.get() ?? [];
-        console.log(await portfolioConnection.get());
-        console.log(this.portfoliodata);
     },
     methods: {
         test() {

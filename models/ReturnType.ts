@@ -5,7 +5,7 @@ export type returnError = {
 
 export type returnType = {
 	success : boolean | null,
-	response : any | null,
+	response : unknown | null,
 	error : returnError | null
 }
 

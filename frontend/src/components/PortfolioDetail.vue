@@ -1,8 +1,11 @@
 <template>
-  <v-dialog v-model="dialog" activator="parent">
-    <v-card>
-      <v-card-text>
-        {{  portfoliodata?.discription }}
+  <v-dialog
+    v-model="dialog" activator="parent">
+    <v-card
+      :title = "portfoliodata?.title"
+      :subtitle="`${portfoliodata?.startdate.toLocaleDateString('kr')} ~ ${portfoliodata?.enddate.toLocaleDateString('kr')}`"
+      >
+      <v-card-text v-html="portfoliodata?.contents">
       </v-card-text>
       <v-card-actions>
         <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
@@ -12,21 +15,30 @@
 
 </template>
 <script lang="ts">
-import { Board } from '@model/BoardItem';
+import { compileMarkDown } from '@/common/CompileMarkdown';
+import { portfolioDetailConnection } from '@/common/connectBack/Connections/portfolioDetailConnection';
+import { Board, ProjectDetail } from '@model/BoardItem';
 import Vue, { defineComponent, PropType } from 'vue'
 export default defineComponent({
   props : {
-    portfoliodata : {
-      type : Object as PropType<Board>,
-      require : true
-    }
+    portfoliodataid : Number
   },
   data() : {
+    portfoliodata : ProjectDetail | null,
+    startdate : string,
+    enddate : string,
     dialog : boolean
   } {
     return {
+      portfoliodata : null,
+      startdate : '',
+      enddate : '',
       dialog : false
     }
-  }
+  },
+  async beforeCreate() {
+    this.portfoliodata = await portfolioDetailConnection.get(this.portfoliodataid ?? 0) ?? null;
+    this.portfoliodata!.contents = compileMarkDown(this.portfoliodata?.contents ?? '');
+  },
 })
 </script>
