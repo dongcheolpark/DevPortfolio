@@ -35,6 +35,14 @@ class PortfolioConnection extends Connections {
     }
     return null;
   }
+  put = async (data : ProjectCreate) => {
+    try {
+      await this.axiosback.put(this.src,data);
+    }
+    catch(err) {
+
+    }
+  }
 }
 
 export const portfolioConnection = new PortfolioConnection();

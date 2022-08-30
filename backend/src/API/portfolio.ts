@@ -20,6 +20,7 @@ export class PortfolioController implements Controller {
     router
       .get('/', wrap(this.get))
       .post('/', wrap(this.post))
+      .put('/', wrap(this.put))
     this.router.use(this.path, router);
 	}
 
@@ -30,7 +31,7 @@ export class PortfolioController implements Controller {
 			return (rows as any)[0];
 		}
 		else {
-			const [rows] = await connection.query('select * from board');
+			const [rows] = await connection.query(`SELECT * FROM board ORDER BY \`startdate\` asc`);
 			return rows;
 		}
 	}
@@ -51,6 +52,29 @@ export class PortfolioController implements Controller {
 			return board[0];
 		}
 		catch (err) {
+			console.log((err as Error).message);
+			throw new InternalServerException();
+		}
+	}
+	put : Handler =async (req,res) => {
+		try {
+			const body = req.body as ProjectCreate;	
+			const connection = sqlPool.promise()
+			let querystring =
+			`update board
+			SET title = '${body.title}',image = '${body.image}',url = '${body.url}',startdate = '${body.startdate}',enddate = '${body.enddate}',discription = '${body.contents.substring(0,100)}'
+			where boardid = ${body.boardid}`
+			await connection.query(querystring);
+			querystring = 
+			`update project
+			set contents = '${body.contents}'
+			where projectid = ${body.boardid}
+			`
+			await connection.query(querystring);
+			const board = await connection.query(`select * from board where boardid = ${body.boardid}`);
+			return board[0];
+		}	
+		catch(err) {
 			console.log((err as Error).message);
 			throw new InternalServerException();
 		}

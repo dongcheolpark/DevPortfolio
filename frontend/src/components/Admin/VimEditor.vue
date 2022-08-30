@@ -1,5 +1,6 @@
 <template>
   <textarea ref="editor" style="textStyle" v-model="input" @keydown="getkey($event)" @change="onchange(this)"></textarea>
+  <canvas id="vim-canvas"></canvas>
 </template>
 <style lang="sass" scoped>
 textarea

@@ -21,4 +21,14 @@ export class AxiosBack {
     });
     return res.json();
   }
+  public put =async (path:string,body:any) => {
+    const res = await fetch(this.src + path,{
+        method: 'put',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body)
+    });
+    return res.json();
+  }
 }
