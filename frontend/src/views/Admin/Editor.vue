@@ -19,13 +19,15 @@
           <v-btn @click="onClickExit()">
             Exit
           </v-btn>
-          <v-btn @click="submit()">
+          <v-btn @click="final = true">
             {{ editmode ? "Edit" : "Create"}}
           </v-btn>
         </div>
       </div>
       <div class="Sides Preview" v-html="sideWindow"></div>
     </div>
+    <v-overlay v-model="final" contained class="align-center justify-center">
+    </v-overlay>
   </div>
 </template>
 <style lang="sass" scoped>
@@ -104,6 +106,7 @@ export default defineComponent({
       this.editmode = true;
       const res = await portfolioDetailConnection.get(id);
       console.log(res);
+      this.id = res!.boardid;
       this.title = res!.title;
       this.emitter.emit('EditorValue',res!.contents);
       this.startdate = new Date(res!.startdate);
@@ -116,7 +119,9 @@ export default defineComponent({
   },
   data() {
     return {
+      final : false,
       editmode : false,
+      id : 0,
       title: "",
       contents: "",
       startdate : new Date(),
@@ -134,20 +139,42 @@ export default defineComponent({
     onClickExit() {
       this.$router.back();
     },
-    async submit() {
-      var convertDateToString = (date : Date) : string => {
-        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-      }
+    convertDateToString : (date : Date) : string => {
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    },
+    async post() {
       var data: ProjectCreate = {
+        boardid : null,
         title: this.title,
-        startdate: convertDateToString(this.startdate as Date),
-        enddate: convertDateToString(this.enddate as Date),
+        startdate: this.convertDateToString(this.startdate as Date),
+        enddate: this.convertDateToString(this.enddate as Date),
         contents: this.contents,
         image: '',
         url: ''
       };
       const res = await portfolioConnection.post(data);
       this.$router.push(`/admin`);
+    },
+    async put() {
+      var data: ProjectCreate = {
+        boardid : this.id,
+        title: this.title,
+        startdate: this.convertDateToString(this.startdate as Date),
+        enddate: this.convertDateToString(this.enddate as Date),
+        contents: this.contents,
+        image: '',
+        url: ''
+      };
+      const res = await portfolioConnection.put(data);
+      this.$router.push(`/admin`);
+    },
+    async submit() {
+      if(!this.editmode) {
+        this.post();
+      }
+      else {
+        this.put();
+      }
     }
   }
 })
