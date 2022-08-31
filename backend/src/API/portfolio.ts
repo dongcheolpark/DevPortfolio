@@ -5,6 +5,7 @@ import { Handler,wrap} from "../lib/request-handler"
 import { Board, ProjectCreate } from "@model/BoardItem";
 import { InternalServerException } from "../common/exception/InternalServerException";
 import { ResultSetHeader } from "mysql2";
+import { upload } from "@/middleware/Upload";
 
 export class PortfolioController implements Controller {
 	path = '/portfolio';
