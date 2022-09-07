@@ -27,6 +27,9 @@
       <div class="Sides Preview" v-html="sideWindow"></div>
     </div>
     <v-overlay v-model="final" contained class="align-center justify-center">
+      <v-card
+      title="test">
+      </v-card>
     </v-overlay>
   </div>
 </template>

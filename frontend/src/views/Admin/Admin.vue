@@ -82,7 +82,7 @@ export default defineComponent({
   },
   methods : {
     ClickCreateBtn : function() {
-      this.$router.push('/Admin/Editor');
+      this.$router.push('/admin/editor');
     }
   },
   async created() {

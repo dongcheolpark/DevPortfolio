@@ -1,7 +1,7 @@
 import { InternalServerException } from "@/common/exception/InternalServerException";
 import { Controller } from "@/common/interfaces/Icontroller";
 import { firebaseApp, storage } from "@/lib/FirebaseConfig";
-import {getDownloadURL, ref, uploadBytes, uploadBytesResumable} from 'firebase/storage'
+import {deleteObject, getDownloadURL, ref, uploadBytes, uploadBytesResumable} from 'firebase/storage'
 import { Handler, wrap } from "@/lib/request-handler";
 import { upload } from "@/middleware/Upload";
 import { Router } from "express";
@@ -35,10 +35,18 @@ export class ImageController implements Controller {
 			// Step 1. Create reference for file name in cloud storage 
 			const imageRef = ref(storage,fileName);
 			// Step 2. Upload the file in the bucket storage
-			await uploadBytes(imageRef,file.buffer);
-			// Step 3. Grab the public url
-			const downloadURL = await getDownloadURL(imageRef);
-			return downloadURL;
+			/*
+			const res = await deleteObject(ref(storage,'36955431.jpeg'));
+			console.log(res);*/
+			const uploadTask = uploadBytesResumable(imageRef,file.buffer);
+			const getURL = new Promise((resolve,reject) => uploadTask.on('state_changed',async (snapshot) => {
+				const progress =
+				(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+			console.log(`Upload is ${progress}% done`);
+			},async () => {
+				resolve(await getDownloadURL(uploadTask.snapshot.ref));
+			}));
+			return await getURL;
 		} catch (error) {
 			console.log(error)
 			throw new InternalServerException();
