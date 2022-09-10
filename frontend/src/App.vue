@@ -26,7 +26,7 @@ export default defineComponent({
   },
   mounted() {
     router.afterEach((to, from) => {
-      this.footerVisible = (to.path !== '/Admin/Editor') // 푸터 지우기
+      this.footerVisible = (to.path !== '/admin/editor') // 푸터 지우기
     })
   }
 })

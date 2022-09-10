@@ -8,11 +8,11 @@ export type Board = {
 	discription: string
 }
 export type Project = {
-	projectid: Number
+	projectid: number
 	contents: String
 }
 export type ProjectDetail = {
-	projectid: Number
+	boardid: number
 	contents: string
 	title: string
 	image: string
@@ -23,6 +23,7 @@ export type ProjectDetail = {
 }
 
 export type ProjectCreate = {
+	boardid : number | null
 	title: string
 	startdate: string
 	enddate: string

@@ -19,16 +19,54 @@
           <v-btn @click="onClickExit()">
             Exit
           </v-btn>
-          <v-btn @click="submit()">
+          <v-btn @click="final = true">
             {{ editmode ? "Edit" : "Create"}}
           </v-btn>
         </div>
       </div>
       <div class="Sides Preview" v-html="sideWindow"></div>
     </div>
+    <v-overlay
+      v-model="final" width ="500px" class="align-center justify-center finalTop">
+        <v-card
+        class = "finalCard"
+        >
+          <div>
+            <h2>썸네일 입력</h2>
+            <v-file-input
+              accept="image/png, image/jpeg, image/bmp"
+              v-model="images"
+              v-on:update:model-value="uploadImage()"
+              placeholder="사진을 선택하세요."
+              prepend-icon="mdi-camera"
+              label="Avatar"
+            ></v-file-input>
+            <h2>URL 입력</h2>
+            <v-text-field
+              :counter="10"
+              label="URL 입력"
+              required
+            ></v-text-field>
+            <v-btn @click = "editmode ?  put() : post()" v-if="imageUrl != ''">
+              제출
+            </v-btn>
+          </div>
+        </v-card>
+    </v-overlay>
   </div>
 </template>
 <style lang="sass" scoped>
+.finalCard
+  padding: 20px
+  width: 100%
+.finalTop
+  display: flex
+  margin: 5px
+  flex-direction: column
+  //vertical-align: middle
+  //justify-content: center
+.finalTop div
+  text-align: center
 .topContents
   margin : 1vh
   padding: 2vh
@@ -69,6 +107,9 @@
   z-index: 10
   background: #ddd
 @media screen and (max-width: 1000px)
+  .finalTop
+    width: 90%
+
   .Contents
     width : 100%
   .Preview
@@ -94,6 +135,7 @@ import { Board, ProjectCreate } from '@model/BoardItem'
 import { portfolioConnection } from '@/common/connectBack/Connections/portfolioConnection'
 import { portfolioDetailConnection } from '@/common/connectBack/Connections/portfolioDetailConnection'
 import { compileMarkDown } from '@/common/CompileMarkdown'
+import { imageConnection } from '@/common/connectBack/Connections/ImageConnection'
 
 export default defineComponent({
   name: "Editor",
@@ -104,6 +146,7 @@ export default defineComponent({
       this.editmode = true;
       const res = await portfolioDetailConnection.get(id);
       console.log(res);
+      this.id = res!.boardid;
       this.title = res!.title;
       this.emitter.emit('EditorValue',res!.contents);
       this.startdate = new Date(res!.startdate);
@@ -116,7 +159,11 @@ export default defineComponent({
   },
   data() {
     return {
+      images : [],
+      imageUrl : '',
+      final : false,
       editmode : false,
+      id : 0,
       title: "",
       contents: "",
       startdate : new Date(),
@@ -131,23 +178,49 @@ export default defineComponent({
     },
   },
   methods: {
+    async uploadImage() {
+      this.imageUrl = await imageConnection.post(this.images[0]);
+      console.log(this.imageUrl);
+    },
     onClickExit() {
       this.$router.back();
     },
-    async submit() {
-      var convertDateToString = (date : Date) : string => {
-        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-      }
+    convertDateToString : (date : Date) : string => {
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    },
+    async post() {
       var data: ProjectCreate = {
+        boardid : null,
         title: this.title,
-        startdate: convertDateToString(this.startdate as Date),
-        enddate: convertDateToString(this.enddate as Date),
+        startdate: this.convertDateToString(this.startdate as Date),
+        enddate: this.convertDateToString(this.enddate as Date),
         contents: this.contents,
-        image: '',
+        image: this.imageUrl,
         url: ''
       };
       const res = await portfolioConnection.post(data);
       this.$router.push(`/admin`);
+    },
+    async put() {
+      var data: ProjectCreate = {
+        boardid : this.id,
+        title: this.title,
+        startdate: this.convertDateToString(this.startdate as Date),
+        enddate: this.convertDateToString(this.enddate as Date),
+        contents: this.contents,
+        image: this.imageUrl,
+        url: ''
+      };
+      const res = await portfolioConnection.put(data);
+      this.$router.push(`/admin`);
+    },
+    async submit() {
+      if(!this.editmode) {
+        this.post();
+      }
+      else {
+        this.put();
+      }
     }
   }
 })

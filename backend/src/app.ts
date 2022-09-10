@@ -7,6 +7,7 @@ import LoginController from './API/login';
 import { PortfolioController } from './API/portfolio';
 import { ForbidenMiddleware } from './middleware/ForbidenMiddleware';
 import bodyParser from 'body-parser'
+import { ImageController } from './API/image';
 
 class App {
   private app : express.Application;
@@ -58,7 +59,8 @@ class App {
 
 const app = new App([
   new LoginController(),
-  new PortfolioController()
+  new PortfolioController(),
+  new ImageController()
 ]);
 
 app.startServer();

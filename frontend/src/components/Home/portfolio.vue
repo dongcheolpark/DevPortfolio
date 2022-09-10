@@ -13,15 +13,17 @@
       <v-carousel cycle height="400" class="carousel" hide-delimiter-background progress="success">
         <v-carousel-item v-for="(item, i) in portfoliodata" :key="i">
           <v-hover close-delay="200">
-            <v-sheet @click="test()"  :color="'success'" height="100%">
-              <div class="d-flex fill-height justify-center align-center">
-                <div class="text-h2">
+            <v-card @click="test()" height="100%">
+              <v-img cover
+                :src="item.image ?? 'https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg'">
+              <div
+                class="d-flex fill-height justify-center align-center text-h2 text-white text-outline-black">
                   {{  item.title  }}
-                </div>
               </div>
+              </v-img>
               <portfolio-detail :portfoliodataid="item.boardid">
               </portfolio-detail>
-            </v-sheet>
+            </v-card>
           </v-hover>
         </v-carousel-item>
       </v-carousel>
