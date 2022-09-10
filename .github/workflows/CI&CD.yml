@@ -37,6 +37,7 @@ jobs:
         echo "dbpassword = $DB_PASSWORD" >> .env
         echo "dbport = $DB_PORT" >> .env
         echo "dbdatabase = $DB_DATABASE" >> .env
+        echo "imagekey = $IMAGE_KEY" >> .env
         cd ..
       env :
         DB_HOST : ${{ secrets.DB_HOST }}
