@@ -60,6 +60,7 @@ export class PortfolioController implements Controller {
 	put : Handler =async (req,res) => {
 		try {
 			const body = req.body as ProjectCreate;	
+			console.log(body);
 			const connection = sqlPool.promise()
 			let querystring =
 			`update board
