@@ -12,6 +12,8 @@
             <datepicker
               v-model="enddate"
             />
+            <v-file-input type="file" @change="uploadImageEditor" ref="file" style="display: none"/>
+            <v-btn @click="$refs.file.click()">이미지 업로드</v-btn>
           </div>
         </div>
         <VimEditor></VimEditor>
@@ -53,6 +55,22 @@
           </div>
         </v-card>
     </v-overlay>
+    <v-snackbar
+      v-model="snackbar"
+      timeout="1000"
+    >
+      클립보드에 복사되었습니다.
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="blue"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 <style lang="sass" scoped>
@@ -159,6 +177,7 @@ export default defineComponent({
   },
   data() {
     return {
+      snackbar:false,
       images : [],
       imageUrl : '',
       final : false,
@@ -178,9 +197,23 @@ export default defineComponent({
     },
   },
   methods: {
-    async uploadImage() {
-      this.imageUrl = await imageConnection.post(this.images[0]);
-      console.log(this.imageUrl);
+    async uploadImageEditor() {
+      const fileInputEl = this.$refs.file as any;
+      const files = fileInputEl.files;
+      const res = await this.uploadImage(files[0]);
+      await navigator.clipboard.writeText(`![](${res})`);
+      this.snackbar = true;
+    },
+    async uploadImage(image? : File) {
+      if(image == undefined) {
+        image = this.images[0];
+        const res = await imageConnection.post(image);
+        this.imageUrl = res;
+      }
+      else {
+        const res = await imageConnection.post(image);
+        return res;
+      }
     },
     onClickExit() {
       this.$router.back();

@@ -45,7 +45,6 @@ export class PortfolioController implements Controller {
 			const requestRes  = await connection.query(querystring);
 
 			const id = (requestRes as ResultSetHeader[])[0].insertId;
-
 			await connection.query(`insert into project (projectid,contents) 
 			 values (${id},'${body.contents}')`);
 			const board = await connection.query(`select * from board where boardid = ${id}`);
@@ -60,13 +59,13 @@ export class PortfolioController implements Controller {
 	put : Handler =async (req,res) => {
 		try {
 			const body = req.body as ProjectCreate;	
-			console.log(body);
 			const connection = sqlPool.promise()
 			let querystring =
 			`update board
 			SET title = '${body.title}',image = '${body.image}',url = '${body.url}',startdate = '${body.startdate}',enddate = '${body.enddate}',discription = '${body.contents.substring(0,100)}'
 			where boardid = ${body.boardid}`
 			await connection.query(querystring);
+			console.log(body.contents);
 			querystring = 
 			`update project
 			set contents = '${body.contents}'

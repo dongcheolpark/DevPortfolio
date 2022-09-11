@@ -3,8 +3,10 @@
   	ref = "editor"
     v-model:value="input"
     language = "markdown"
+    width="auto"
     class="MonacoEditor"
     @editorDidMount="editorDidMount"
+    @drop="dragDrop"
   >
 
   </MonacoEditor>
@@ -19,7 +21,6 @@
   font-size: 14px
   font-family: "Monaco", courier, monospace
   height: 100%
-  width : 100%
 </style>
 <script lang="ts">
 import Vue, { defineComponent } from 'vue'
@@ -50,7 +51,10 @@ export default defineComponent({
   methods : {
     editorDidMount(editor) {
       initVimMode(editor);
-    }
+    },
+    dragDrop(e : Event) {
+      console.log(e);
+    },
   }
 })
 </script>
