@@ -24,7 +24,6 @@ export class ImageController implements Controller {
 
 	post: Handler = async (req, res) => {
 		try {
-			console.log(req);
 			const file = req.file as Express.Multer.File;
 			const timestamp = Date.now();
 			const name = file.originalname.split(".")[0];
