@@ -45,6 +45,7 @@ jobs:
         DB_PASSWORD : ${{ secrets.DB_PASSWORD }}
         DB_PORT : ${{ secrets.DB_PORT }}
         DB_DATABASE : ${{ secrets.DB_DATABASE }}
+        IMAGE_KEY : ${{ secrets.IMAGE_KEY }}
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v2
