@@ -1,8 +1,16 @@
 <template>
-  <textarea ref="editor" style="textStyle" v-model="input" @keydown="getkey($event)" @change="onchange(this)"></textarea>
+  <MonacoEditor
+  	ref = "editor"
+    v-model:value="input"
+    language = "markdown"
+    class="MonacoEditor"
+    @editorDidMount="editorDidMount"
+  >
+
+  </MonacoEditor>
 </template>
 <style lang="sass" scoped>
-textarea
+.MonacoEditor
   border: none
   border-right: 1px solid #ccc
   resize: none
@@ -10,15 +18,19 @@ textarea
   background-color: #f6f6f6
   font-size: 14px
   font-family: "Monaco", courier, monospace
-  padding: 20px
   height: 100%
   width : 100%
 </style>
 <script lang="ts">
 import Vue, { defineComponent } from 'vue'
+import MonacoEditor from 'monaco-editor-vue3'
+import {initVimMode} from 'monaco-vim'
 
 export default defineComponent({
   name : 'VimEditor',
+  components : {
+    MonacoEditor
+  },
   data() {
     return  {
       input : '',
@@ -36,11 +48,8 @@ export default defineComponent({
     }
   },
   methods : {
-    getkey(e : KeyboardEvent) {
-      const textarea : HTMLTextAreaElement = this.$refs.editor as any;
-    },
-    onchange(value :any) {
-      console.log(value);
+    editorDidMount(editor) {
+      initVimMode(editor);
     }
   }
 })

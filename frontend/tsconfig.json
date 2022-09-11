@@ -14,6 +14,7 @@
     "baseUrl": ".",
     "allowJs": true,
     "checkJs": false,
+    "noImplicitAny": false,
     //allowJs: true로 js 사용시 js의 오류 검사 여부
     "maxNodeModuleJsDepth": 0,
     "types": [
