@@ -35,6 +35,9 @@
         >
           <div>
             <h2>썸네일 입력</h2>
+            <v-img
+            :src = 'imageUrl'
+            />
             <v-file-input
               accept="image/png, image/jpeg, image/bmp"
               v-model="images"
@@ -46,6 +49,7 @@
             <h2>URL 입력</h2>
             <v-text-field
               :counter="10"
+              v-model="url"
               label="URL 입력"
               required
             ></v-text-field>
@@ -169,6 +173,8 @@ export default defineComponent({
       this.emitter.emit('EditorValue',res!.contents);
       this.startdate = new Date(res!.startdate);
       this.enddate = new Date(res!.enddate);
+      this.imageUrl = res!.image;
+      this.url = res!.url;
     }
   },
   mounted() {
@@ -180,6 +186,7 @@ export default defineComponent({
       snackbar:false,
       images : [],
       imageUrl : '',
+      url : '',
       final : false,
       editmode : false,
       id : 0,
@@ -229,7 +236,7 @@ export default defineComponent({
         enddate: this.convertDateToString(this.enddate as Date),
         contents: this.contents,
         image: this.imageUrl,
-        url: ''
+        url: this.url
       };
       const res = await portfolioConnection.post(data);
       this.$router.push(`/admin`);
@@ -242,7 +249,7 @@ export default defineComponent({
         enddate: this.convertDateToString(this.enddate as Date),
         contents: this.contents,
         image: this.imageUrl,
-        url: ''
+        url: this.url
       };
       const res = await portfolioConnection.put(data);
       this.$router.push(`/admin`);
