@@ -40,8 +40,8 @@ export class PortfolioController implements Controller {
 		try {
 			const body = req.body as ProjectCreate;
 			const connection = sqlPool.promise()
-			const querystring = `insert into board (title,startdate,enddate,discription)
-			 values ('${body.title}','${body.startdate}','${body.enddate}','${body.contents.substring(0,100)}');`;
+			const querystring = `insert into board (title,startdate,enddate,discription,url)
+			 values ('${body.title}','${body.startdate}','${body.enddate}','${body.contents.substring(0,100)}','${body.url}');`;
 			const requestRes  = await connection.query(querystring);
 
 			const id = (requestRes as ResultSetHeader[])[0].insertId;
