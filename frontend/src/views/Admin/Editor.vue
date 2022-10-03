@@ -208,7 +208,7 @@ export default defineComponent({
       const fileInputEl = this.$refs.file as any;
       const files = fileInputEl.files;
       const res = await this.uploadImage(files[0]);
-      await navigator.clipboard.writeText(`![](${res})`);
+      await navigator.clipboard.writeText(`<img src="${res}" width = 75%>`);
       this.snackbar = true;
     },
     async uploadImage(image? : File) {
