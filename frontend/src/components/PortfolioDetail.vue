@@ -3,9 +3,13 @@
     v-model="dialog" activator="parent">
     <v-card
       :title = "portfoliodata?.title"
+      class="Card"
       :subtitle="`${portfoliodata?.startdate.toLocaleDateString('kr')} ~ ${portfoliodata?.enddate.toLocaleDateString('kr')}`"
       >
-      <v-card-text v-html="portfoliodata?.contents">
+      <v-card-text>
+        <div class = "Text" v-html="portfoliodata?.contents">
+
+        </div>
       </v-card-text>
       <v-card-actions>
         <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
@@ -14,6 +18,14 @@
   </v-dialog>
 
 </template>
+<style lang="sass" scoped>
+.Card
+  max-width: 768px
+  width: auto
+  padding: 1rem
+.Text img
+  width: 75%
+</style>
 <script lang="ts">
 import { compileMarkDown } from '@/common/CompileMarkdown';
 import { portfolioDetailConnection } from '@/common/connectBack/Connections/portfolioDetailConnection';
